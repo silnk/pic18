@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Generator - 18 Photos (3x6 Grid)</title>
+    <title>Photo Generator - 18 Photos (6x3 Grid)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         body {
@@ -58,8 +58,8 @@
         }
         .photo-grid {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            grid-template-rows: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(6, 1fr);
             gap: 0;
             margin: 20px 0;
             background: white;
@@ -68,8 +68,8 @@
             justify-items: center;
         }
         .photo-cell {
-            width: 3.5cm;
-            height: 9.9cm;
+            width: 7cm;
+            height: 4.95cm;
             border: 1px solid #ccc;
             overflow: hidden;
             display: flex;
@@ -133,7 +133,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>📷 Photo Generator - 18 Photos</h1>
+        <h1>📷 Photo Generator - 18 Photos (6x3 Grid)</h1>
         
         <div class="upload-section" id="uploadArea">
             <input type="file" id="fileInput" accept="image/*">
@@ -142,7 +142,7 @@
             </button>
             <p>or drag and drop your image here</p>
             <div class="size-info">
-                Each photo: 35mm x 99mm (perfect 3x6 grid on A4 paper)
+                Each photo: 70mm x 49.5mm (perfect 6x3 grid on A4 paper)
             </div>
             <div class="cutting-guide">
                 Cut along the grid lines to get 18 identical photos
@@ -150,7 +150,7 @@
         </div>
 
         <div class="preview-section" id="previewSection">
-            <h3>Preview (3 rows x 6 columns):</h3>
+            <h3>Preview (6 rows x 3 columns):</h3>
             <div class="photo-grid" id="photoGrid">
                 <!-- 18 photo cells will be generated here -->
             </div>
@@ -177,7 +177,7 @@
 
         let currentImageData = null;
 
-        // Create 18 photo cells for preview (3 rows of 6)
+        // Create 18 photo cells for preview (6 rows of 3)
         for (let i = 0; i < 18; i++) {
             const cell = document.createElement('div');
             cell.className = 'photo-cell';
@@ -261,18 +261,18 @@
             const pdfWidth = pdf.internal.pageSize.getWidth(); // 210mm
             const pdfHeight = pdf.internal.pageSize.getHeight(); // 297mm
             
-            // Calculate exact dimensions for perfect 3x6 grid
-            // 6 columns: 210mm / 6 = 35mm each
-            // 3 rows: 297mm / 3 = 99mm each
-            const photoWidth = pdfWidth / 6; // 35mm
-            const photoHeight = pdfHeight / 3; // 99mm
+            // Calculate exact dimensions for perfect 6x3 grid
+            // 3 columns: 210mm / 3 = 70mm each
+            // 6 rows: 297mm / 6 = 49.5mm each
+            const photoWidth = pdfWidth / 3; // 70mm
+            const photoHeight = pdfHeight / 6; // 49.5mm
 
-            // Load the image and add it 18 times to the PDF (3 rows of 6)
+            // Load the image and add it 18 times to the PDF (6 rows of 3)
             const img = new Image();
             img.onload = function() {
-                // Add all 18 photos in a perfect 3x6 grid
-                for (let row = 0; row < 3; row++) {
-                    for (let col = 0; col < 6; col++) {
+                // Add all 18 photos in a perfect 6x3 grid
+                for (let row = 0; row < 6; row++) {
+                    for (let col = 0; col < 3; col++) {
                         const xPos = col * photoWidth;
                         const yPos = row * photoHeight;
                         
@@ -289,7 +289,7 @@
                 }
                 
                 // Save the PDF
-                pdf.save('photos-18-grid.pdf');
+                pdf.save('photos-18-grid-6x3.pdf');
                 status.textContent = 'PDF generated successfully! Check your downloads folder.';
             };
             
